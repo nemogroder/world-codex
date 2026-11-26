@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0e14">
+<title>World Codex</title>
+<style>
+:root{--bg:#0b0e14;--panel:rgba(28,34,46,.55);--line:rgba(96,165,250,.35);--blue:#60a5fa;--blue2:#3b82f6;--deep:#1d4ed8;--txt:#e6edf7;--mut:#8b9bb4;--r:16px}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;color:var(--txt);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
+background:radial-gradient(900px 500px at 85% -10%,rgba(59,130,246,.2),transparent),radial-gradient(700px 500px at -10% 110%,rgba(29,78,216,.16),transparent),var(--bg);background-attachment:fixed}
+h1,h2,h3,h4,p{margin:0}.mut{color:var(--mut)}.sm{font-size:13px}
+#nav{position:sticky;top:0;height:100vh;width:230px;flex:none;margin:10px;padding:14px 10px;display:flex;flex-direction:column;gap:6px;
+background:var(--panel);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:var(--r);transition:width .2s;overflow:hidden;z-index:20}
+#nav.mini{width:66px}#nav.mini .l,#nav.mini .cnt{display:none}
+.brand{font-weight:700;letter-spacing:.06em;color:var(--blue);padding:4px 10px 12px;white-space:nowrap}
+.nv{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;border:1px solid transparent;background:none;color:var(--txt);font:inherit;cursor:pointer;text-align:left;white-space:nowrap}
+.nv:hover{background:rgba(96,165,250,.1)}.nv.on{border-color:var(--line);background:rgba(59,130,246,.18);box-shadow:0 0 14px rgba(59,130,246,.2)}
+.nv .ic{width:20px;text-align:center;color:var(--blue)}.cnt{margin-left:auto;font-size:12px;color:var(--mut)}.spc{flex:1}
+main{flex:1;min-width:0;padding:16px 22px 40px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}.top h1{font-size:26px;font-weight:600}.top .spc{flex:1}
+.btn{font:inherit;color:var(--txt);background:rgba(59,130,246,.12);border:1px solid var(--line);border-radius:12px;padding:8px 14px;cursor:pointer}
+.btn:hover{background:rgba(59,130,246,.28)}.btn.pri{background:var(--blue2);border-color:var(--blue)}.btn.dng{border-color:rgba(248,113,113,.5);color:#fca5a5}
+.btn.ib{padding:6px 11px;font-size:18px}
+.in{width:100%;font:inherit;color:var(--txt);background:rgba(8,11,18,.6);border:1px solid var(--line);border-radius:12px;padding:9px 12px;margin:4px 0 10px;outline:none}
+.in:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(96,165,250,.18)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin:14px 0}
+.card{background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:.15s}
+.card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 6px 24px rgba(59,130,246,.18)}
+.sc{padding:18px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}.sc .big{font-size:30px;color:var(--blue)}
+.im{height:130px;background:rgba(59,130,246,.1) center/cover;display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--blue)}
+.ct{padding:12px 14px}.ct p{font-size:13px;color:var(--mut);margin:4px 0 6px}.ct small{font-size:12px}
+.chip{display:inline-block;font-size:12px;padding:2px 10px;margin:2px 4px 2px 0;border:1px solid var(--line);border-radius:99px;color:var(--blue);cursor:pointer}
+.chip.on,.chip.lk:hover{background:rgba(59,130,246,.3)}.chip.lk{font-size:13px;padding:4px 12px}
+.ov{position:fixed;inset:0;background:rgba(3,5,10,.65);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:14px;z-index:50}
+.dlg{width:min(620px,100%);max-height:92vh;overflow:auto;background:rgba(18,23,33,.92);border:1px solid var(--blue);border-radius:20px;padding:20px;box-shadow:0 0 40px rgba(59,130,246,.25)}
+.dlg label{display:block;font-size:13px;color:var(--mut)}.row{display:flex;gap:10px}.row label{flex:1}
+.mh{display:flex;gap:16px;align-items:center;margin-bottom:12px}.mh img{width:110px;height:110px;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.when{color:var(--blue);margin:2px 0 4px}.kv{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid rgba(96,165,250,.12)}.kv b{width:130px;flex:none;color:var(--mut);font-weight:500}
+.sum{margin:12px 0;font-size:16px}.body{white-space:pre-wrap;color:#c5d0e0;margin-bottom:12px}h4{margin:14px 0 6px;color:var(--mut);font-weight:500}
+.acts{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}.pv{max-width:120px;border-radius:12px;margin-bottom:10px}
+.lkl{max-height:150px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:6px 10px;margin-top:4px}.ck{padding:3px 0;color:var(--txt)!important;font-size:14px!important}
+summary{cursor:pointer;margin:2px 0 10px}
+.tl{position:relative;overflow:hidden;min-height:260px;border:1px solid var(--line);border-radius:var(--r);background:rgba(8,11,18,.5);cursor:grab;touch-action:pan-y;user-select:none}
+.tk{position:absolute;top:0;bottom:0;border-left:1px dashed rgba(148,163,184,.18)}.tk i{position:absolute;top:6px;left:5px;font-size:11px;color:var(--mut);font-style:normal}
+.ti{position:absolute;cursor:pointer}.bar{height:24px;border-radius:8px;background:linear-gradient(90deg,rgba(59,130,246,.6),rgba(29,78,216,.45));border:1px solid var(--blue);font-size:12px;line-height:22px;padding:0 8px;overflow:hidden;white-space:nowrap}
+.dot{width:12px;height:12px;transform:rotate(45deg);background:var(--blue);border:2px solid rgba(255,255,255,.4);box-shadow:0 0 10px var(--blue2)}
+.lb{position:absolute;font-size:12px;line-height:24px;white-space:nowrap;cursor:pointer}
+@media(max-width:760px){#nav{position:fixed;left:0;top:0;transform:translateX(-115%);transition:transform .2s;width:230px;margin:8px}#nav.open{transform:none}main{padding:12px 14px 40px}.mh img{width:80px;height:80px}}
+</style>
+</head>
+<body>
+<aside id="nav"></aside>
+<main id="main"></main>
+<div id="modal"></div>
+<script>
+/* ---------- 1. Data model ----------
+   Everything is an "entry": {id,type,name,summary,body,fields,tags,links,img,start,end,t}.
+   Rename sections or change their fields right here (f = extra fields per type). */
+const KEY='world-codex-v1';
+const T={
+ events:{label:'Timeline',icon:'◷',one:'Event',f:['Place']},
+ characters:{label:'Characters',icon:'◉',one:'Character',f:['Role','Species / origin','Affiliation']},
+ spacecraft:{label:'Spacecraft',icon:'➤',one:'Spacecraft',f:['Class','Manufacturer','Crew','Length']},
+ peoples:{label:'Groups',icon:'⬡',one:'Group',f:['Kind','Leader','Headquarters','Founded','Goals','Allies','Rivals','Homeworld','Government','Population']},
+ locations:{label:'Locations',icon:'✦',one:'Location',f:['Kind','System / region','Population']}};
+let db=load(),page='home',filt={q:'',tag:''},draft=null,tv=null;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{entries:[]}}catch(e){return{entries:[]}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){alert('Browser storage is full. Export a backup and use smaller images.')}}
+const $=s=>document.querySelector(s),uid=()=>Math.random().toString(36).slice(2,10);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const byId=id=>db.entries.find(e=>e.id===id),ofType=t=>db.entries.filter(e=>e.type===t);
+const chips=a=>a.map(g=>`<span class="chip">${esc(g)}</span>`).join('');
+
+/* ---------- 2. Navigation + pages ---------- */
+function go(p){page=p;filt={q:'',tag:''};$('#nav').classList.remove('open');render();scrollTo(0,0)}
+function toggleNav(){const n=$('#nav');innerWidth<760?n.classList.toggle('open'):n.classList.toggle('mini')}
+function render(){renderNav();const m=$('#main');page==='home'?home(m):page==='events'?timelinePage(m):gridPage(m,page)}
+function renderNav(){
+ const it=(k,ic,l,c)=>`<button class="nv ${page===k?'on':''}" onclick="go('${k}')"><span class="ic">${ic}</span><span class="l">${l}</span>${c==null?'':`<span class="cnt">${c}</span>`}</button>`;
+ $('#nav').innerHTML=`<div class="brand">◈ <span class="l">WORLD CODEX</span></div>${it('home','⌂','Home')}`+
+ Object.entries(T).map(([k,v])=>it(k,v.icon,v.label,ofType(k).length)).join('')+
+ `<div class="spc"></div><button class="nv" onclick="exportData()"><span class="ic">⇩</span><span class="l">Export backup</span></button>
+ <label class="nv"><span class="ic">⇧</span><span class="l">Import backup</span><input type="file" hidden accept=".json" onchange="importData(this)"></label>`}
+const topbar=(title,acts='')=>`<div class="top"><button class="btn ib" onclick="toggleNav()">☰</button><h1>${title}</h1><div class="spc"></div>${acts}</div>`;
+function entryCard(e){const tp=T[e.type];
+ return `<div class="card" onclick="view('${e.id}')"><div class="im" style="${e.img?`background-image:url('${e.img}')`:''}">${e.img?'':tp.icon}</div>
+ <div class="ct"><small class="mut">${tp.one}${e.type==='events'&&parseD(e.start)?' · '+when(e):''}</small><h3>${esc(e.name)}</h3><p>${esc(e.summary)}</p>${chips(e.tags)}</div></div>`}
+const hay=e=>(e.name+' '+e.summary+' '+e.body+' '+e.tags.join(' ')).toLowerCase();
+
+function home(m){
+ m.innerHTML=topbar('World Codex')+`<p class="mut">Everything about your world, in one place.</p>
+ <input id="gs" class="in" style="margin-top:14px" placeholder="Search everything…" oninput="gsearch(this.value)"><div class="grid" id="res"></div>
+ <div class="grid">${Object.entries(T).map(([k,v])=>`<div class="card sc" onclick="go('${k}')"><div class="big">${v.icon}</div><h3>${v.label}</h3>
+ <span class="mut">${ofType(k).length} entries</span><button class="btn" onclick="event.stopPropagation();edit(null,'${k}')">＋ New</button></div>`).join('')}</div>
+ <h2>Recently updated</h2><div class="grid">${[...db.entries].sort((a,b)=>(b.t||0)-(a.t||0)).slice(0,6).map(entryCard).join('')||
+ '<p class="mut">Nothing yet. Add your first entry, or <a href="#" style="color:var(--blue)" onclick="sample();return false">load a few sample entries</a>.</p>'}</div>`}
+function gsearch(q){q=q.trim().toLowerCase();$('#res').innerHTML=q?db.entries.filter(e=>hay(e).includes(q)).slice(0,12).map(entryCard).join('')||'<p class="mut">No matches.</p>':''}
+
+function gridPage(m,t){
+ m.innerHTML=topbar(T[t].label,`<button class="btn pri" onclick="edit(null,'${t}')">＋ New ${T[t].one}</button>`)+
+ `<input class="in" placeholder="Filter ${T[t].label.toLowerCase()}…" oninput="filt.q=this.value.toLowerCase();cards('${t}')"><div id="tg"></div><div class="grid" id="cards"></div>`;cards(t)}
+function cards(t){const all=ofType(t),tags=[...new Set(all.flatMap(e=>e.tags))].sort();
+ $('#tg').innerHTML=tags.map(g=>`<span class="chip ${filt.tag===g?'on':''}" onclick="filt.tag=filt.tag==='${g}'?'':'${g}';cards('${t}')">${esc(g)}</span>`).join('');
+ const l=all.filter(e=>(!filt.q||hay(e).includes(filt.q))&&(!filt.tag||e.tags.includes(filt.tag))).sort((a,b)=>a.name.localeCompare(b.name));
+ $('#cards').innerHTML=l.map(entryCard).join('')||`<p class="mut">No ${T[t].label.toLowerCase()} yet.</p>`}
+
+/* ---------- 3. Timeline (years are plain numbers, negatives allowed, so fictional calendars work) ---------- */
+/* Calendar math: day numbers counted from 1970-01-01 in the Gregorian calendar, for ANY year
+   (own arithmetic instead of JS Date, which breaks beyond about +/-270,000 years). */
+const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],fl=Math.floor;
+const dfc=(y,m,d)=>{y-=m<=2;const e=fl(y/400),yo=y-e*400,doy=fl((153*(m>2?m-3:m+9)+2)/5)+d-1;return e*146097+yo*365+fl(yo/4)-fl(yo/100)+doy-719468};
+const cfd=z=>{z+=719468;const e=fl(z/146097),doe=z-e*146097,yo=fl((doe-fl(doe/1460)+fl(doe/36524)-fl(doe/146096))/365),doy=doe-(365*yo+fl(yo/4)-fl(yo/100)),mp=fl((5*doy+2)/153),m=mp<10?mp+3:mp-9;return[yo+e*400+(m<=2),m,doy-fl((153*mp+2)/5)+1]};
+// Years you type: 2150 = 2150 AD, -500 = 500 BC (no year 0). Math uses astronomical years (0 = 1 BC).
+const ast=y=>y<0?y+1:y,hist=a=>a<=0?a-1:a,fy=y=>y<0?-y+' BC':y+' AD';
+// Dates are stored as text: "2150", "2150-03" or "2150-03-14" (month and day are optional).
+function parseD(s){const m=/^(-?\d+)(?:-(\d{1,2}))?(?:-(\d{1,2}))?$/.exec(String(s||'').trim());return m&&+m[1]?{y:+m[1],m:+m[2]||0,d:+m[3]||0}:null}
+function toDay(s,end){const p=parseD(s),a=ast(p.y); // a partial date means its first day (start) or last day (end)
+ if(!p.m)return end?dfc(a,12,31):dfc(a,1,1);
+ if(!p.d)return end?(p.m>11?dfc(a+1,1,1):dfc(a,p.m+1,1))-1:dfc(a,p.m,1);return dfc(a,p.m,p.d)}
+const fmtD=s=>{const p=parseD(s);return(p.d?p.d+' ':'')+(p.m?MN[p.m-1]+' ':'')+fy(p.y)};
+const isR=e=>!!parseD(e.end)&&e.end!==e.start,evS=e=>toDay(e.start,0),evT=e=>isR(e)?toDay(e.end,1)+1:evS(e);
+const when=e=>fmtD(e.start)+(isR(e)?' → '+fmtD(e.end):'');
+function ticks(lo,hi,W){const out=[],raw=(hi-lo)/(W/120),ya=cfd(fl(lo))[0],yb=cfd(fl(hi))[0];
+ if(raw>=300){const r=raw/365.2425,pw=10**fl(Math.log10(r)),st=Math.max(1,[1,2,5,10].map(k=>k*pw).find(s=>s>=r)); // year ticks
+  for(let y=Math.ceil(hist(ya)/st)*st,n=0;y<=hist(yb)&&n<80;y+=st,n++)if(y)out.push([dfc(ast(y),1,1),fy(y)])}
+ else if(raw>=40){const k=raw>=150?6:raw>=75?3:1;let y=ya,m=fl((cfd(fl(lo))[1]-1)/k)*k+1; // month ticks
+  for(let n=0;n<400;n++){const z=dfc(y,m,1);if(z>hi)break;if(z>=lo)out.push([z,m===1?fy(hist(y)):MN[m-1]+' '+fy(hist(y))]);m+=k;if(m>12){m-=12;y++}}}
+ else{const k=raw<1.5?1:raw<3?2:raw<7?5:raw<14?10:15; // day ticks
+  for(let z=fl(lo),n=0;z<=hi&&n<600;z++,n++){const[y,m,d]=cfd(z);if(z>=lo&&(d-1)%k===0&&!(k>1&&d>28))out.push([z,d===1?MN[m-1]+' '+fy(hist(y)):d+' '+MN[m-1]])}}
+ return out}
+function timelinePage(m){
+ m.innerHTML=topbar('Timeline',`<button class="btn" onclick="fitTL();drawTL()">Fit all</button><button class="btn pri" onclick="edit(null,'events')">＋ New Event</button>`)+
+ `<div id="tl" class="tl"></div><p class="mut sm" style="margin-top:8px">Scroll or pinch to zoom · drag to pan · tap an event for details. Dates are Gregorian; use a negative year for BC.</p>`;
+ if(!tv)fitTL();bindTL();drawTL()}
+function fitTL(){const ev=ofType('events').filter(e=>parseD(e.start));
+ if(!ev.length){const t=Date.now()/864e5;tv={lo:t-365,hi:t+365};return}
+ const lo=Math.min(...ev.map(evS)),hi=Math.max(...ev.map(evT)),p=Math.max((hi-lo)*.08,15);tv={lo:lo-p,hi:hi+p}}
+function drawTL(){const box=$('#tl');if(!box)return;const W=box.clientWidth,{lo,hi}=tv,ppu=W/(hi-lo);
+ let h=ticks(lo,hi,W).map(([z,l])=>`<div class="tk" style="left:${(z-lo)*ppu}px"><i>${l}</i></div>`).join('');
+ const items=ofType('events').filter(e=>parseD(e.start)).map(e=>({e,s:evS(e),t:evT(e)})).sort((a,b)=>a.s-b.s||b.t-a.t),ends=[];
+ items.forEach(({e,s,t})=>{ // pack events into rows so labels never overlap at this zoom level
+  const lw=e.name.length*7+16,range=t>s,bw=(t-s)*ppu,inside=range&&bw>=lw;
+  const oS=range?s:s-8/ppu,oE=range?(inside?t:t+(lw+4)/ppu):s+(lw+16)/ppu;
+  let L=ends.findIndex(x=>x+4/ppu<=oS);if(L<0){L=ends.length;ends.push(0)}ends[L]=oE;
+  if(oE<lo||oS>hi)return;const y=34+L*34,x=(s-lo)*ppu;
+  h+=range?`<div class="ti bar" data-id="${e.id}" style="left:${x}px;top:${y}px;width:${Math.max(bw,4)}px">${inside?esc(e.name):''}</div>${inside?'':`<div class="lb" data-id="${e.id}" style="left:${x+bw+6}px;top:${y}px">${esc(e.name)}</div>`}`
+  :`<div class="ti dot" data-id="${e.id}" style="left:${x-6}px;top:${y+6}px"></div><div class="lb" data-id="${e.id}" style="left:${x+14}px;top:${y}px">${esc(e.name)}</div>`});
+ box.style.height=Math.max(260,60+ends.length*34)+'px';box.innerHTML=h}
+function zoomTL(f,px){const box=$('#tl'),{lo,hi}=tv,x=lo+(hi-lo)*px/box.clientWidth,n=Math.min(Math.max((hi-lo)*f,3),3.65e11)/(hi-lo);
+ tv={lo:x-(x-lo)*n,hi:x+(hi-x)*n};drawTL()}
+const dateIn=(p,s)=>{const q=parseD(s)||{};return`<div class="row"><label>Year (negative = BC)<input id="${p}y" class="in" inputmode="text" placeholder="e.g. 2150 or -500" value="${q.y||''}"></label><label>Month<select id="${p}m" class="in"><option value="">–</option>${MN.map((n,i)=>`<option value="${i+1}" ${q.m===i+1?'selected':''}>${n}</option>`).join('')}</select></label><label>Day<input id="${p}d" class="in" inputmode="numeric" value="${q.d||''}"></label></div>`};
+function readD(p){const y=$('#'+p+'y').value.trim(),m=$('#'+p+'m').value,d=$('#'+p+'d').value.trim();if(!y&&!m&&!d)return{s:''};
+ if(!/^-?\d+$/.test(y)||!+y||Math.abs(+y)>999999999)return{err:'Year must be a whole number (negative = BC, there is no year 0).'};
+ if(d&&!m)return{err:'Pick a month for that day.'};
+ if(d){const dd=+d,a=ast(+y);if(!(dd>=1&&dd<=31)||cfd(dfc(a,+m,dd))[2]!==dd)return{err:'That day does not exist in that month.'}}
+ return{s:(+y)+(m?'-'+String(m).padStart(2,'0'):'')+(d?'-'+String(+d).padStart(2,'0'):'')}}
+function bindTL(){const box=$('#tl'),P=new Map();let moved=0;const rx=()=>box.getBoundingClientRect().left;
+ box.onwheel=e=>{e.preventDefault();zoomTL(e.deltaY<0?.8:1.25,e.clientX-rx())};
+ box.onpointerdown=e=>{P.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=0;box.setPointerCapture(e.pointerId);box.style.cursor='grabbing'};
+ box.onpointermove=e=>{const p=P.get(e.pointerId);if(!p)return;
+  if(P.size==2){const a=[...P.values()],d0=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);P.set(e.pointerId,{x:e.clientX,y:e.clientY});
+   const b=[...P.values()],d1=Math.hypot(b[0].x-b[1].x,b[0].y-b[1].y);moved=99;if(d0&&d1)zoomTL(d0/d1,(b[0].x+b[1].x)/2-rx());return}
+  const dx=e.clientX-p.x;moved+=Math.abs(dx);P.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  const sh=-dx*(tv.hi-tv.lo)/box.clientWidth;tv={lo:tv.lo+sh,hi:tv.hi+sh};drawTL()};
+ box.onpointerup=box.onpointercancel=e=>{box.style.cursor='grab';
+  if(P.size==1&&moved<5&&e.type==='pointerup'){const el=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-id]');if(el)view(el.dataset.id)}
+  P.delete(e.pointerId)}}
+addEventListener('resize',()=>{if(page==='events')drawTL()});
+
+/* ---------- 4. View / edit / delete ---------- */
+function modal(h){$('#modal').innerHTML=`<div class="ov" onclick="if(event.target===this)closeModal()"><div class="dlg">${h}</div></div>`}
+const closeModal=()=>$('#modal').innerHTML='';addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+function view(id){const e=byId(id);if(!e)return;const tp=T[e.type];
+ const conn=[...new Set([...e.links,...db.entries.filter(x=>x.links.includes(id)).map(x=>x.id)])].map(byId).filter(Boolean);
+ modal(`<div class="mh">${e.img?`<img src="${e.img}">`:''}<div><small class="mut">${tp.one}</small><h2>${esc(e.name)}</h2>${e.type==='events'&&parseD(e.start)?`<div class="when">${when(e)}</div>`:''}${chips(e.tags)}</div></div>
+ ${tp.f.map(k=>e.fields[k]?`<div class="kv"><b>${k}</b><span>${esc(e.fields[k])}</span></div>`:'').join('')}
+ ${e.summary?`<p class="sum">${esc(e.summary)}</p>`:''}${e.body?`<div class="body">${esc(e.body)}</div>`:''}
+ ${conn.length?`<h4>Connected</h4>${conn.map(c=>`<span class="chip lk" onclick="view('${c.id}')">${T[c.type].icon} ${esc(c.name)}</span>`).join('')}`:''}
+ <div class="acts"><button class="btn dng" onclick="del('${id}')">Delete</button><button class="btn" onclick="edit('${id}')">Edit</button><button class="btn" onclick="closeModal()">Close</button></div>`)}
+function edit(id,type){
+ draft=id?structuredClone(byId(id)):{id:uid(),type,name:'',summary:'',body:'',fields:{},tags:[],links:[],img:'',start:'',end:''};const tp=T[draft.type];
+ const others=db.entries.filter(x=>x.id!==draft.id).sort((a,b)=>a.type.localeCompare(b.type)||a.name.localeCompare(b.name));
+ modal(`<h2>${id?'Edit':'New'} ${tp.one}</h2><label>Name<input id="f_name" class="in" value="${esc(draft.name)}"></label>
+ <label>Picture (optional)<input type="file" accept="image/*" class="in" onchange="pickImg(this)"></label><div id="pv">${draft.img?`<img class="pv" src="${draft.img}">`:''}</div>
+ ${draft.type==='events'?`<label>Start date</label>${dateIn('s',draft.start)}<label>End date (optional, makes it a long event)</label>${dateIn('e',draft.end)}`:''}
+ ${(()=>{const fi=(k,i)=>`<label>${k}<input id="f_x${i}" class="in" value="${esc(draft.fields[k]||'')}"></label>`,r=tp.f.slice(4);return tp.f.slice(0,4).map(fi).join('')+(r.length?`<details ${r.some(k=>draft.fields[k])?'open':''}><summary class="mut">More details (optional)</summary>${r.map((k,i)=>fi(k,i+4)).join('')}</details>`:'')})()}
+ <label>Short summary<input id="f_sum" class="in" value="${esc(draft.summary)}"></label>
+ <label>Tags (comma separated)<input id="f_tags" class="in" value="${esc(draft.tags.join(', '))}"></label>
+ <label>Notes<textarea id="f_body" class="in" rows="6">${esc(draft.body)}</textarea></label>
+ <label>Links to other entries</label><div class="lkl">${others.map(x=>`<label class="ck"><input type="checkbox" value="${x.id}" ${draft.links.includes(x.id)?'checked':''}> ${T[x.type].icon} ${esc(x.name)}</label>`).join('')||'<span class="mut">Nothing to link to yet.</span>'}</div>
+ <div class="acts"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn pri" onclick="saveEdit(${!id})">Save</button></div>`)}
+function pickImg(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{ // shrink so browser storage lasts
+ const s=Math.min(1,360/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;
+ c.getContext('2d').drawImage(im,0,0,c.width,c.height);draft.img=c.toDataURL('image/jpeg',.82);$('#pv').innerHTML=`<img class="pv" src="${draft.img}">`};im.src=r.result};r.readAsDataURL(f)}
+function saveEdit(isNew){const d=draft,v=i=>$('#'+i).value.trim();d.name=v('f_name');
+ if(!d.name)return alert('Please enter a name.');
+ if(d.type==='events'){const a=readD('s'),b=readD('e');if(a.err||b.err)return alert(a.err||b.err);if(!a.s)return alert('Events need a start year.');d.start=a.s;d.end=b.s;if(b.s&&toDay(b.s,1)<toDay(a.s,0))return alert('The end date is before the start date.')}
+ T[d.type].f.forEach((k,i)=>d.fields[k]=v('f_x'+i));d.summary=v('f_sum');d.body=v('f_body');
+ d.tags=v('f_tags').split(',').map(s=>s.replace(/['"<>\\]/g,'').trim()).filter(Boolean);
+ d.links=[...document.querySelectorAll('.lkl input:checked')].map(c=>c.value);d.t=Date.now();
+ isNew?db.entries.push(d):db.entries[db.entries.findIndex(e=>e.id===d.id)]=d;save();closeModal();render()}
+function del(id){const e=byId(id);if(!confirm(`Delete "${e.name}"?`))return;
+ db.entries=db.entries.filter(x=>x.id!==id);db.entries.forEach(x=>x.links=x.links.filter(l=>l!==id));save();closeModal();render()}
+
+/* ---------- 5. Backup + sample data ---------- */
+function exportData(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='world-codex-backup.json';a.click()}
+function importData(inp){const f=inp.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!Array.isArray(d.entries))throw 0;
+ if(confirm(`Replace current data with ${d.entries.length} imported entries?`)){db=d;save();render()}}catch(e){alert('That file is not a valid backup.')}});inp.value=''}
+function sample(){const n=(type,name,summary,x={})=>({id:uid(),type,name,summary,body:'',fields:{},tags:[],links:[],img:'',start:'',end:'',t:Date.now(),...x});
+ const l=n('locations','Helios Station','Orbital hub above the gas giant.',{tags:['hub']}),c=n('characters','Captain Mara Voss','Veteran pilot turned smuggler.',{fields:{Role:'Captain'},tags:['pilot']}),
+ s=n('spacecraft','ISV Meridian','Long-range survey vessel.',{fields:{Class:'Survey'}});
+ db.entries.push(l,c,s,n('events','Founding of Helios','The station comes online.',{start:'2150-03-14',links:[l.id]}),n('events','The Long Survey','Meridian maps the outer belt.',{start:'2152-06',end:'2155-11',links:[s.id,c.id]}),
+ n('events','First contact','An unknown signal answers.',{start:'2154-09-02',links:[c.id]}));save();tv=null;render()}
+render();
+</script>
+</body>
+</html>
